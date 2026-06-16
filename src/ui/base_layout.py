@@ -22,7 +22,7 @@ def style_background_dashboard():
     st.markdown("""
         <style>
                 .stApp{
-                      background-color:#5B45F2 !important;
+                      background-color:#EEF2FF !important;
                 }
                 
 
@@ -57,15 +57,15 @@ def style_base_layout():
                 .block-container{
                     padding-top:1.5cm !important;
                 }
-                 #MainMenu, footer , header{
-                visibility:hidden;
-                }
+                # #MainMenu, footer , header{
+                #visibility:hidden;
+                #}
 
                 h1 {
                 font-family:'Climate Crisis', sans-serif !important;
                 font-size:3.5rem !important;
                 line-height:1.1 !important;
-                margin:0rem !important
+                margin:0rem !important;
                 
                 }
                 
@@ -73,7 +73,7 @@ def style_base_layout():
                 font-family:'Climate Crisis', sans-serif !important;
                 font-size:2rem !important;
                 line-height:0.9 !important;
-                margin:0rem !important'
+                margin:0rem !important;
                 
                 }
                 h3,h4,p{
@@ -81,8 +81,8 @@ def style_base_layout():
                 }
 
                 button[kind="secondary"]{
-                boder-radius: 1.5rem !important;
-                background:#EB459E !important;
+                border-radius: 1.5rem !important;
+                background:#EC4899 !important;
                 color:white !important;
                 padding:10px 20px !important;
                 border:none !important;
@@ -91,8 +91,8 @@ def style_base_layout():
                 
                 
                 button[kind="tertiary"]{
-                boder-radius: 1.5rem !important;
-                background:#EB459E !important;
+                border-radius: 1.5rem !important;
+                background:#2563EB !important;
                 color:white !important;
                 padding:10px 20px !important;
                 border:none !important;
@@ -100,9 +100,9 @@ def style_base_layout():
                 }
                 
                 
-                button{
-                boder-radius: 1.5rem !important;
-                background:#5865F2 !important;
+                button[kind="primary"]{
+                border-radius: 1.5rem !important;
+                background:#4F46E5 !important;
                 color:white !important;
                 padding:10px 20px !important;
                 border:none !important;
@@ -110,9 +110,14 @@ def style_base_layout():
                 }
 
                 button:hover{
-                tansform : scale(1.05) !important;
+                transform : scale(1.05) !important;
                 }
                 
+                .stApp {
+                overflow: hidden;
+            }
+
+
                 
 
 
