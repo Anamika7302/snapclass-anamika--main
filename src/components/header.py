@@ -5,15 +5,10 @@ def header_home():
     logo_url="https://i.ibb.co/YTYGn5qV/logo.png"
 
     st.markdown(f"""
-                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:30px; margin-top:30px">
-                   <img src="{logo_url}"style="height:100px;" />
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:10px; margin-top:10px">
+                   <img src="{logo_url}"style="height:90px;" />
                    <h1 style=="text-align:center; justify-content:center;align-item:center;color:#E0E3FF">SNAP<br/>CLASS </h1>
                 </div>
-      
-
-     
-
-
 
                       """, unsafe_allow_html=True)
     
@@ -24,7 +19,7 @@ def header_dashboard():
     st.markdown(f"""
                 <div style="display:flex; align-items:center; gap:10px; ">
                    <img src="{logo_url}"style="height:85px;" />
-                   <h2 style="margin:0;position:relative;top:4px; color:#1F2937;">SNAP<br/>CLASS </h1>
+                   <h2 style="margin:0;position:relative;top:4px; color:#4F46E5 ;">SNAP<br/>CLASS </h1>
                 </div>
       
 

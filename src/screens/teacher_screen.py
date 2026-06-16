@@ -3,7 +3,7 @@ import streamlit as st
 from src.ui.base_layout import style_background_dashboard, style_base_layout
 from src.components.header import header_dashboard
 from src.components.footer import footer_dashboard
-from src.database.db import check_teacher_exists, create_teacher, teacher_login,get_teacher_subject
+from src.database.db import check_teacher_exists, create_teacher, teacher_login,get_teacher_subject,get_attendance_for_teacher
 from src.components.dialogue_create_subject import create_subject_dialog
 from src.components.student_card import subject_card
 from src.components.dialog_share_subject import share_subject_dialog
@@ -34,7 +34,20 @@ def teacher_dashboard():
     with c1:
         header_dashboard()
     with c2:
-        st.subheader(f""" Welcome ! {teacher_data["name"]}""")
+        st.markdown(
+            f"""
+            <div style="line-height:1.1;">
+                <p style="margin:0; font-size:1.8rem; font-weight:600;">
+                    Welcome 👨‍🏫
+                </p>
+                <p style="margin:0; font-size:2rem; font-weight:700; margin-bottom:4;">
+                    {teacher_data["name"]}
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+            )
+        
         if st.button("Logout", type="secondary", shortcut="control+backspace"):
             st.session_state["is_logged_in"]=None
             del st.session_state.teacher_data
@@ -45,17 +58,17 @@ def teacher_dashboard():
         st.session_state.current_teacher_tab="take_attendence"
     tab1, tab2 , tab3 = st.columns(3) 
     with tab1:
-        type1="primary" if st.session_state.current_teacher_tab=="take_attendence" else "tertiary"
+        type1="primary" if st.session_state.current_teacher_tab=="take_attendence" else "secondary"
         if st.button("Take Attendence",type=type1, width='stretch',icon=':material/ar_on_you:'):
             st.session_state.current_teacher_tab="take_attendence"
             st.rerun()
     with tab2:
-        type2="primary" if st.session_state.current_teacher_tab=="manage_subjects" else "tertiary"
+        type2="primary" if st.session_state.current_teacher_tab=="manage_subjects" else "secondary"
         if st.button("Manage Subjects",type=type2, width='stretch',icon=':material/book_ribbon:'):
             st.session_state.current_teacher_tab="manage_subjects"
             st.rerun()
     with tab3:
-        type3="primary" if st.session_state.current_teacher_tab=="attendence_records" else "tertiary"
+        type3="tertiary" if st.session_state.current_teacher_tab=="attendence_records" else "secondary"
             
         if st.button("Attendence Records",type=type3, width='stretch',icon=':material/cards_stack:'):
             st.session_state.current_teacher_tab="attendence_records"
@@ -151,23 +164,8 @@ def teacher_tab_take_attendence():
                 attendance_result_dialog(pd.DataFrame(results), attendance_to_log)    
 
     with c3:
-        if st.button("Use Voice Attendance", type="primary", width="stretch", icon=":material/mic:"):
+        if st.button("Use Voice Attendance", type="secondary", width="stretch", icon=":material/mic:"):
             voice_attendance_dialog(selected_subject_id)
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
 
 
 
@@ -202,7 +200,7 @@ def teacher_tab_manage_subjects():
                         sub['name'],
                         sub['subject_code']
                     )
-                st.space()
+                
 
             subject_card(
                 name=sub['name'],
@@ -215,14 +213,43 @@ def teacher_tab_manage_subjects():
         st.info("No Subjects found")
     
 
+
 def teacher_tab_attendence_records():
-    st.header("Attendence Recordss")  
+    st.header("Attendence Recordss") 
+    teacher_id =  st.session_state.teacher_data['teacher_id']
+    records = get_attendance_for_teacher(teacher_id)
+    if not records:
+        st.warning("No records found")
+        return
+    data =[]
+    for r in records:
+        ts = r.get('timestamp')
+        data.append({
+            "ts_group":ts.split(".")[0] if ts else None,
+            "Time": datetime.fromisoformat(ts).strftime("%Y-%m-%d %I:%M %p") if ts else "N/A",
+            "Subject": r['subjects']['name'],
+            "Subject Code":r['subjects']['subject_code'],
+            "is_present": bool(r.get('is_present',False))
+        })
 
+    df = pd.DataFrame(data)
 
+    summary = (
+        df.groupby(['ts_group', 'Time','Subject','Subject Code'])
+        .agg(
+           Present_Count =('is_present','sum'),
+           Total_Count =('is_present','count'),
 
+        ).reset_index()
+    )
+    summary['Attendance Stats']=(
+        "✅" + summary['Present_Count'].astype(str)+ "/" + summary['Total_Count'].astype(str) + 'Students'
+    )
+    display_df = (summary.sort_values(by='ts_group', ascending=False)
+                  [['Time','Subject','Subject Code','Attendance Stats']]
+                  )
 
-
-
+    st.dataframe(display_df, width='stretch',hide_index=True)
 
 def login_teacher(username,password):
     if not username or not password:

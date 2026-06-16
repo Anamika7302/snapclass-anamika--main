@@ -22,7 +22,7 @@ def student_dashboard():
     with c1:
         header_dashboard()
     with c2:
-        st.subheader(f""" Welcome 😊! {student_data['name']}""")
+        st.subheader(f""" Welcome 😊 {student_data['name']}""")
         if st.button("Logout", type="secondary", shortcut="control+backspace"):
             st.session_state["is_logged_in"]=None
             del st.session_state.student_data
@@ -109,11 +109,8 @@ def student_screen():
             st.rerun()
     
      st.header('Login using Face Id', text_alignment="center")
-     st.space()  
-     st.space() 
+     st.space()   
      show_registration = False
-
-
       
      photo_source=st.camera_input("Position your face in the center")
      if photo_source:
@@ -177,21 +174,10 @@ def student_screen():
                       
                                  
                          else:
-                             st.error("Couldnt capture your facial features for registration")
-
-                         
+                             st.error("Couldnt capture your facial features for registration") 
                  else:
                      st.warning("Please enter your name!") 
-                     
-
-
-
-
-
-
-
-
-                            
+                                                
      footer_dashboard()
 
      

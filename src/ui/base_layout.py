@@ -55,15 +55,20 @@ def style_base_layout():
                
 
                 .block-container{
-                    padding-top:1.5cm !important;
+                        padding-top: 0.4rem !important;
+                        padding-bottom: 0rem !important;
+                        padding-left: 2rem !important;
+                        padding-right: 2rem !important;
+
+                        
                 }
-                # #MainMenu, footer , header{
-                #visibility:hidden;
-                #}
+                 #MainMenu, footer , header{
+                visibility:hidden;
+                }
 
                 h1 {
                 font-family:'Climate Crisis', sans-serif !important;
-                font-size:3.5rem !important;
+                font-size:2.5rem !important;
                 line-height:1.1 !important;
                 margin:0rem !important;
                 
@@ -71,8 +76,8 @@ def style_base_layout():
                 
                 h2 {
                 font-family:'Climate Crisis', sans-serif !important;
-                font-size:2rem !important;
-                line-height:0.9 !important;
+                font-size:1.7rem !important;
+                line-height:1.2 !important;
                 margin:0rem !important;
                 
                 }
@@ -108,13 +113,21 @@ def style_base_layout():
                 border:none !important;
                 transition :transform 0.25s ease-in-out !important;
                 }
+                button{
+                border-radius: 1.5rem !important;
+                background:#4F46E5 !important;
+                color:white !important;
+                padding:10px 20px !important;
+                border:none !important;
+                transition :transform 0.25s ease-in-out !important;
+                }
 
                 button:hover{
                 transform : scale(1.05) !important;
                 }
                 
                 .stApp {
-                overflow: hidden;
+                overflow: hidden ! important;
             }
 
 
