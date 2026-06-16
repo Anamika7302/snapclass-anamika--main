@@ -1,5 +1,5 @@
 # utilities
-
+streamlit
 numpy
 pandas
 scikit-learn
@@ -14,7 +14,7 @@ bcrypt
 segno
 pillow
 
-streamlit
+
 
 librosa
 resemblyzer
